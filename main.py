@@ -4,51 +4,39 @@ import re
 import zipfile
 import io
 
-# Configuração da página com tema customizado e layout amplo
+# Configuração da página
 st.set_page_config(
     page_title="Consolidador de Anexos", 
     page_icon="📦", 
     layout="centered"
 )
 
-# Estilização CSS para deixar a interface moderna (cantos arredondados, sombras e fontes limpas)
-st.markdown("""
-    <style>
-        .main {
-            background-color: #f8f9fa;
-        }
-        .block-container {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-        }
-        h1 {
-            color: #1e3a8a;
-            font-weight: 700;
-        }
-        .step-box {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-            border-left: 5px solid #1e3a8a;
-        }
-        .stButton>button {
-            background-color: #1e3a8a;
-            color: white;
-            border-radius: 8px;
-            padding: 10px 24px;
-            font-weight: bold;
-            width: 100%;
-            border: none;
-            transition: all 0.3s ease;
-        }
-        .stButton>button:hover {
-            background-color: #1d4ed8;
-            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
-        }
-    </style>
-""", unsafe_allowed_html=True)
+# Estilização CSS segura contra quebras de interpretador
+estilo_css = """
+<style>
+    .main { background-color: #f8f9fa; }
+    .block-container { padding-top: 2rem; padding-bottom: 2rem; }
+    h1 { color: #1e3a8a; font-weight: 700; }
+    .step-box { 
+        background-color: #ffffff; 
+        padding: 20px; 
+        border-radius: 10px; 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); 
+        margin-bottom: 20px; 
+        border-left: 5px solid #1e3a8a; 
+    }
+    .stButton>button { 
+        background-color: #1e3a8a; 
+        color: white; 
+        border-radius: 8px; 
+        padding: 10px 24px; 
+        font-weight: bold; 
+        width: 100%; 
+        border: none; 
+    }
+</style>
+"""
+st.markdown(estilo_css, unsafe_allowed_html=True)
 
 # Topo do Site / Header
 st.title("📦 Gerenciador de Anexos")
@@ -140,7 +128,7 @@ if st.button("🚀 PROCESSAR E GERAR PACOTE DE DOWNLOAD"):
                     
                     zip_mestre.writestr("Resultado_Consolidado.xlsx", excel_buffer.getvalue())
                 
-                st.balloons() # Efeito visual comemorativo na tela
+                st.balloons()
                 st.success("✨ Sucesso! Tudo processado e organizado perfeitamente.")
                 
                 st.download_button(
