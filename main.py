@@ -11,7 +11,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# Estilização CSS segura contra quebras de interpretador
+# Estilização CSS corrigida
 estilo_css = """
 <style>
     .main { background-color: #f8f9fa; }
@@ -36,11 +36,11 @@ estilo_css = """
     }
 </style>
 """
-st.markdown(estilo_css, unsafe_allowed_html=True)
+st.markdown(estilo_css, unsafe_allow_html=True)
 
 # Topo do Site / Header
 st.title("📦 Gerenciador de Anexos")
-st.markdown("<p style='color: #64748b; font-size: 1.1rem; margin-top: -10px;'>Prepare seus arquivos para disparo automatizado no Power Automate Desktop com poucos cliques.</p>", unsafe_allowed_html=True)
+st.markdown("<p style='color: #64748b; font-size: 1.1rem; margin-top: -10px;'>Prepare seus arquivos para disparo automatizado no Power Automate Desktop com poucos cliques.</p>", unsafe_allow_html=True)
 st.markdown("---")
 
 def extrair_codigo_orgao(nome_arquivo):
@@ -53,22 +53,22 @@ def extrair_codigo_orgao(nome_arquivo):
     return None
 
 # --- PASSO 1 ---
-st.markdown('<div class="step-box">### 📂 1. Base de Destinatários<br><small style="color: #64748b;">Faça o upload do arquivo Excel contendo a relação de Órgãos e E-mails.</small></div>', unsafe_allowed_html=True)
+st.markdown('<div class="step-box">### 📂 1. Base de Destinatários<br><small style="color: #64748b;">Faça o upload do arquivo Excel contendo a relação de Órgãos e E-mails.</small></div>', unsafe_allow_html=True)
 arquivo_emails = st.file_uploader("Selecione a planilha de Órgãos x E-mails", type=["xlsx"], label_visibility="collapsed")
 
 # --- PASSO 2 ---
-st.markdown('<div class="step-box">### 📄 2. Arquivos para Agrupamento<br><small style="color: #64748b;">Arraste e solte todos os relatórios soltos de uma só vez (.xlsx, .csv, .txt).</small></div>', unsafe_allowed_html=True)
+st.markdown('<div class="step-box">### 📄 2. Arquivos para Agrupamento<br><small style="color: #64748b;">Arraste e solte todos os relatórios soltos de uma só vez (.xlsx, .csv, .txt).</small></div>', unsafe_allow_html=True)
 arquivos_soltos = st.file_uploader("Arraste os arquivos aqui", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True, label_visibility="collapsed")
 
 # --- PASSO 3 ---
-st.markdown('<div class="step-box">### ⚙️ 3. Configuração do Diretório Local<br><small style="color: #64748b;">Informe a pasta do seu computador onde o Power Automate fará a leitura física dos arquivos.</small></div>', unsafe_allowed_html=True)
+st.markdown('<div class="step-box">### ⚙️ 3. Configuração do Diretório Local<br><small style="color: #64748b;">Informe a pasta do seu computador onde o Power Automate fará a leitura física dos arquivos.</small></div>', unsafe_allow_html=True)
 caminho_local_pc = st.text_input(
     "Caminho local da pasta:",
     placeholder="Ex: C:\\RoboAutomate\\Arquivos",
     label_visibility="collapsed"
 ).strip().strip('"')
 
-st.markdown("<br>", unsafe_allowed_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 # --- PROCESSAMENTO ---
 if st.button("🚀 PROCESSAR E GERAR PACOTE DE DOWNLOAD"):
