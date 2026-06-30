@@ -33,7 +33,7 @@ arquivos_soltos = st.file_uploader(
 )
 
 # --- PASSO 3: Input do caminho local ---
-st.subheader("3. Configuração do Power Automate")
+st.subheader("3. Diretório de Destino Local")
 caminho_local_pc = st.text_input(
     "Digite o caminho da pasta do seu computador onde você vai extrair os arquivos:",
     placeholder="Ex: C:\\RoboAutomate\\Arquivos"
