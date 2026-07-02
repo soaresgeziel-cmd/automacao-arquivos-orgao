@@ -50,82 +50,49 @@ st.markdown("""
             margin-bottom: 2.5rem;
         }
         
-        /* Cards de Passos com Indicador de Borda Neon */
-        .step-card {
-            background: #ffffff;
-            padding: 24px;
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
-            margin-bottom: 1.5rem;
-            position: relative;
-            transition: all 0.3s ease;
+        /* Estilização das Labels Nativas do Streamlit (Substitui os Cards HTML com Perfeição) */
+        div[data-testid="stWidgetLabel"] p {
+            color: #0f172a !important;
+            font-size: 1.2rem !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.02em !important;
+            margin-bottom: 4px !important;
         }
-        .step-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.08);
-            border-color: #cbd5e1;
-        }
-        .step-tag {
-            background: #eff6ff;
-            color: #2563eb;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: inline-block;
-            margin-bottom: 12px;
-        }
-        .step-title {
-            color: #0f172a;
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-        .step-desc {
+        
+        /* Container de instrução logo abaixo do título do passo */
+        .step-desc-native {
             color: #64748b;
             font-size: 0.9rem;
             line-height: 1.5;
-            margin-bottom: 0px;
+            margin-top: -6px;
+            margin-bottom: 12px;
         }
         
         /* Modernização das Caixas de Upload nativas do Streamlit */
-        div[data-testid="stFileUploader"] {
-            padding: 6px 0 0 0;
-        }
         div[data-testid="stFileUploader"] section {
-            background-color: #f8fafc !important;
+            background-color: #ffffff !important;
             border: 2px dashed #cbd5e1 !important;
-            border-radius: 12px !important;
+            border-radius: 16px !important;
             padding: 1.5rem !important;
-            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.01) !important;
+            transition: all 0.25s ease !important;
         }
         div[data-testid="stFileUploader"] section:hover {
             border-color: #3b82f6 !important;
             background-color: #f0f7ff !important;
-        }
-        
-        /* FORÇA O SUMIÇO TOTAL DE QUALQUER LABEL RESIDUAL (FIM DO REFLEXO) */
-        div[data-testid="stFileUploader"] label, 
-        div[data-testid="stTextInput"] label,
-        div[data-testid="stFileUploader"] [data-testid="stWidgetLabel"] {
-            display: none !important;
-            opacity: 0 !important;
-            height: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05) !important;
         }
         
         /* Modernização do Campo de Input de Texto */
         div[data-testid="stTextInput"] input {
-            background-color: #f8fafc !important;
+            background-color: #ffffff !important;
             border: 1px solid #e2e8f0 !important;
-            border-radius: 10px !important;
+            border-radius: 12px !important;
             padding: 12px 16px !important;
             font-size: 0.95rem !important;
             color: #334155 !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
         }
         div[data-testid="stTextInput"] input:focus {
             border-color: #3b82f6 !important;
@@ -151,9 +118,6 @@ st.markdown("""
             background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%) !important;
             box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4) !important;
             transform: translateY(-2px) !important;
-        }
-        div.stButton > button:first-child:active {
-            transform: translateY(0px) !important;
         }
         
         /* Customização dos Widgets de Métricas Modernas */
@@ -192,28 +156,17 @@ def extrair_codigo_orgao(nome_arquivo):
         return padrao_livre.group(0)
     return None
 
-# --- PASSO 1: Lista de E-mails ---
-st.markdown("""
-    <div class="step-card">
-        <span class="step-tag">Etapa 01</span>
-        <div class="step-title">Base de Destinatários</div>
-        <div class="step-desc">Selecione o arquivo mestre do Excel (.xlsx) contendo a relação de Órgãos e E-mails correspondentes.</div>
-    </div>
-""", unsafe_allow_html=True)
-# Removido o label_visibility="collapsed" para evitar bugs de sobreposição estrutural do Streamlit
-arquivo_emails = st.file_uploader("FiltroEmails", type=["xlsx"])
+# --- PASSO 1: Base de Destinatários ---
+arquivo_emails = st.file_uploader("📂 1. Base de Destinatários", type=["xlsx"])
+st.markdown('<div class="step-desc-native">Selecione o arquivo mestre do Excel (.xlsx) contendo a relação de Órgãos e E-mails correspondentes.</div>', unsafe_allow_html=True)
 
-# --- PASSO 2: Upload dos arquivos/anexos ---
-st.markdown("""
-    <div class="step-card">
-        <span class="step-tag">Etapa 02</span>
-        <div class="step-title">Relatórios e Documentos</div>
-        <div class="step-desc">Arraste e solte todos os arquivos soltos em lote que o sistema deve processar (.xlsx, .csv, .txt).</div>
-    </div>
-""", unsafe_allow_html=True)
-arquivos_soltos = st.file_uploader("FiltroArquivos", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
-# --- MÉTRICAS MODERNAS (UX PREMIUM) ---
+# --- PASSO 2: Relatórios e Documentos ---
+arquivos_soltos = st.file_uploader("📄 2. Relatórios e Anexos", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True)
+st.markdown('<div class="step-desc-native">Arraste e solte todos os arquivos soltos em lote que o sistema deve processar (.xlsx, .csv, .txt).</div>', unsafe_allow_html=True)
+
+# --- MÉTRICAS MODERNAS ---
 if arquivos_soltos:
     total_arquivos = len(arquivos_soltos)
     tamanho_total_bytes = sum(arq.size for arq in arquivos_soltos)
@@ -228,18 +181,14 @@ if arquivos_soltos:
 else:
     st.caption("ℹ️ Aguardando inserção de arquivos do Passo 2 para análise de metadados...")
 
-# --- PASSO 3: Input do caminho local ---
-st.markdown("""
-    <div class="step-card">
-        <span class="step-tag">Etapa 03</span>
-        <div class="step-title">Diretório do Robô Local</div>
-        <div class="step-desc">Insira a pasta exata do Windows onde o Power Automate executará a extração e leitura física dos itens.</div>
-    </div>
-""", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
+
+# --- PASSO 3: Diretório do Robô Local ---
 caminho_local_pc = st.text_input(
-    "FiltroCaminho",
+    "⚙️ 3. Diretório do Robô Local",
     placeholder="Ex: C:\\RoboAutomate\\Arquivos"
-).strip().strip('"')
+)
+st.markdown('<div class="step-desc-native">Insira a pasta exata do Windows onde o Power Automate executará a extração e leitura física dos itens.</div>', unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -310,7 +259,7 @@ if st.button("🚀 Iniciar Processamento e Gerar Carga"):
                     mime="application/zip",
                     use_container_width=True
                 )
-                st.warning("⚠️ **Instrução Técnico:** Extraia os arquivos baixados diretamente dentro da pasta local configurada no Passo 3 para manter a integridade do robô.")
+                st.warning("⚠️ **Instrução Técnica:** Extraia os arquivos baixados diretamente dentro da pasta local configurada no Passo 3 para manter a integridade do robô.")
                 
         except Exception as e:
             st.error(f"Erro crítico no processamento de dados: {e}")
