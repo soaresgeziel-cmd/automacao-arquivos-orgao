@@ -11,13 +11,14 @@ st.set_page_config(
     layout="centered"
 )
 
-# 2. Arquitetura de Design (CSS Clean e Isolado - Sem interferência estrutural)
+# 2. Arquitetura de Design Segura (Escopo Fechado - Sem quebrar componentes nativos)
 st.markdown("""
     <style>
-        /* Tipografia de Alta Fidelidade */
+        /* Importação da Fonte Corporativa */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
-        * {
+        /* Aplicação de fonte cirúrgica (Apenas onde não quebra o HTML interno do Streamlit) */
+        .stApp, .header-title, .header-subtitle, div[data-testid="stWidgetLabel"] p, div.stButton > button {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
         
@@ -50,7 +51,7 @@ st.markdown("""
             margin-bottom: 2.5rem;
         }
         
-        /* Estilização das Labels Oficiais do Streamlit (Sem quebras de layout) */
+        /* Estilização das Labels Oficiais do Streamlit */
         div[data-testid="stWidgetLabel"] p {
             color: #0f172a !important;
             font-size: 1.1rem !important;
@@ -59,18 +60,15 @@ st.markdown("""
             padding-bottom: 4px !important;
         }
         
-        /* Design Moderno para Caixas de Upload */
+        /* Design Suave para a Seção do Uploader (Apenas bordas, sem tocar nos textos internos) */
         div[data-testid="stFileUploader"] section {
             background-color: #ffffff !important;
             border: 2px dashed #cbd5e1 !important;
             border-radius: 12px !important;
-            padding: 1.2rem !important;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02) !important;
-            transition: border-color 0.2s ease, background-color 0.2s ease !important;
         }
         div[data-testid="stFileUploader"] section:hover {
             border-color: #3b82f6 !important;
-            background-color: #f0f7ff !important;
         }
         
         /* Design Moderno para Inputs de Texto */
@@ -131,7 +129,6 @@ def extrair_codigo_orgao(nome_arquivo):
     return None
 
 # --- COMPONENTE 1: Base de Destinatários ---
-# Nomeclatura unificada no próprio widget. Evita qualquer duplicação estrutural.
 arquivo_emails = st.file_uploader("📂 1. Base de Destinatários (.xlsx)", type=["xlsx"])
 
 st.markdown("<br>", unsafe_allow_html=True)
