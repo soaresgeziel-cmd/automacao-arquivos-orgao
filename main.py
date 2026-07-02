@@ -32,10 +32,15 @@ arquivos_soltos = st.file_uploader(
     accept_multiple_files=True
 )
 
-# --- CONTADOR DE ARQUIVOS (NOVIDADE) ---
+# --- CONTADOR E MEDIDOR DE TAMANHO (ATUALIZADO) ---
 if arquivos_soltos:
     total_arquivos = len(arquivos_soltos)
-    st.info(f"📊 **Total de arquivos carregados com sucesso:** {total_arquivos}")
+    
+    # Soma o tamanho de todos os arquivos (em bytes) e converte para Megabytes (MB)
+    tamanho_total_bytes = sum(arq.size for arq in arquivos_soltos)
+    tamanho_total_mb = tamanho_total_bytes / (1024 * 1024)
+    
+    st.info(f"📊 **Total de arquivos:** {total_arquivos} | 💾 **Tamanho total:** {tamanho_total_mb:.2f} MB")
 else:
     st.caption("ℹ️ Nenhum arquivo carregado ainda.")
 
