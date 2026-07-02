@@ -11,7 +11,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# ESTILIZAÇÃO AVANÇADA UI/UX (CSS PREMIUM INTERNOCIONAL)
+# ESTILIZAÇÃO AVANÇADA UI/UX (CSS PURIFICADO E SEM CONFLITOS)
 st.markdown("""
     <style>
         /* Importação de Fonte Moderna e Configuração Global */
@@ -21,7 +21,7 @@ st.markdown("""
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
         
-        /* Fundo do App em Degradê Sutil (Design Moderno) */
+        /* Fundo do App em Degradê Sutil */
         .stApp {
             background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
         }
@@ -33,7 +33,7 @@ st.markdown("""
             max-width: 680px !important;
         }
         
-        /* Cabeçalho de Alta Conversão / Corporativo */
+        /* Cabeçalho Corporativo */
         .header-title {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             -webkit-background-clip: text;
@@ -50,48 +50,26 @@ st.markdown("""
             margin-bottom: 2.5rem;
         }
         
-        /* Títulos Customizados das Etapas (Sem depender do Streamlit) */
-        .custom-step-title {
+        /* Customização dos Títulos Nativos do Streamlit */
+        div[data-testid="stWidgetLabel"] p {
             color: #0f172a !important;
-            font-size: 1.2rem !important;
+            font-size: 1.15rem !important;
             font-weight: 700 !important;
             letter-spacing: -0.02em !important;
-            margin-top: 1.5rem !important;
-            margin-bottom: 2px !important;
-        }
-        .custom-step-desc {
-            color: #64748b;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 12px;
         }
         
-        /* Modernização Completa das Caixas de Upload */
+        /* Modernização das Caixas de Upload */
         div[data-testid="stFileUploader"] section {
             background-color: #ffffff !important;
             border: 2px dashed #cbd5e1 !important;
-            border-radius: 16px !important;
-            padding: 1.5rem !important;
+            border-radius: 14px !important;
+            padding: 1rem !important;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01) !important;
-            transition: all 0.25s ease !important;
+            transition: all 0.2s ease !important;
         }
         div[data-testid="stFileUploader"] section:hover {
             border-color: #3b82f6 !important;
             background-color: #f0f7ff !important;
-            transform: translateY(-1px);
-        }
-        
-        /* EXTINÇÃO TOTAL DAS LABELS NATIVAS (EVITA DUPLICIDADE DE VEZ) */
-        div[data-testid="stFileUploader"] label, 
-        div[data-testid="stTextInput"] label,
-        div[data-testid="stWidgetLabel"],
-        .stWidgetLabel,
-        [data-testid="stWidgetLabel"] {
-            display: none !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            height: 0px !important;
-            position: absolute !important;
         }
         
         /* Modernização do Campo de Input de Texto */
@@ -128,11 +106,9 @@ st.markdown("""
             transform: translateY(-2px) !important;
         }
         
-        /* Customização dos Widgets de Métricas Modernas */
-        div[data-testid="stMetric"] {
-            background: #ffffff !important;
-            padding: 16px 20px !important;
-            border-radius: 14px !important;
+        /* Estilização das caixas de informação e alertas */
+        div[data-testid="stNotification"] {
+            border-radius: 10px !important;
             border: 1px solid #e2e8f0 !important;
         }
     </style>
@@ -152,15 +128,14 @@ def extrair_codigo_orgao(nome_arquivo):
     return None
 
 # --- PASSO 1: Base de Destinatários ---
-st.markdown('<div class="custom-step-title">📂 1. Base de Destinatários</div>', unsafe_allow_html=True)
-st.markdown('<div class="custom-step-desc">Selecione o arquivo mestre do Excel (.xlsx) contendo a relação de Órgãos e E-mails correspondentes.</div>', unsafe_allow_html=True)
-# Passando uma chave aleatória e rótulo irrelevante que será pulverizado pelo CSS
-arquivo_emails = st.file_uploader("label_oculta_1", type=["xlsx"], key="upload_1", label_visibility="collapsed")
+st.info("💡 **Etapa 1:** Selecione o arquivo mestre do Excel (.xlsx) contendo a relação de Órgãos e E-mails correspondentes.")
+arquivo_emails = st.file_uploader("Upload da Base de Destinatários (.xlsx)", type=["xlsx"])
+
+st.markdown("<br>", unsafe_allow_html=True)
 
 # --- PASSO 2: Relatórios e Documentos ---
-st.markdown('<div class="custom-step-title">📄 2. Relatórios e Anexos</div>', unsafe_allow_html=True)
-st.markdown('<div class="custom-step-desc">Arraste e solte todos os arquivos soltos em lote que o sistema deve processar (.xlsx, .csv, .txt).</div>', unsafe_allow_html=True)
-arquivos_soltos = st.file_uploader("label_oculta_2", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True, key="upload_2", label_visibility="collapsed")
+st.info("💡 **Etapa 2:** Arraste e solte todos os arquivos soltos em lote que o sistema deve processar (.xlsx, .csv, .txt).")
+arquivos_soltos = st.file_uploader("Upload dos Relatórios e Anexos (Em Lote)", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True)
 
 # --- MÉTRICAS MODERNAS ---
 if arquivos_soltos:
@@ -177,10 +152,11 @@ if arquivos_soltos:
 else:
     st.caption("ℹ️ Aguardando inserção de arquivos do Passo 2 para análise de metadados...")
 
+st.markdown("<br>", unsafe_allow_html=True)
+
 # --- PASSO 3: Diretório do Robô Local ---
-st.markdown('<div class="custom-step-title">⚙️ 3. Diretório do Robô Local</div>', unsafe_allow_html=True)
-st.markdown('<div class="custom-step-desc">Insira a pasta exata do Windows onde o Power Automate executará a extração e leitura física dos itens.</div>', unsafe_allow_html=True)
-caminho_local_pc = st.text_input("label_oculta_3", placeholder="Ex: C:\\RoboAutomate\\Arquivos", key="input_3", label_visibility="collapsed").strip().strip('"')
+st.info("💡 **Etapa 3:** Insira a pasta exata do Windows onde o Power Automate executará a extração e leitura física dos itens.")
+caminho_local_pc = st.text_input("Diretório do Robô Local", placeholder="Ex: C:\\RoboAutomate\\Arquivos").strip().strip('"')
 
 st.markdown("<br>", unsafe_allow_html=True)
 
