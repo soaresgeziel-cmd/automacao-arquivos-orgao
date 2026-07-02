@@ -11,7 +11,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# ESTILIZAÇÃO AVANÇADA UI/UX (CSS PREMIUM INTERNACIONAL)
+# ESTILIZAÇÃO AVANÇADA UI/UX (CSS PREMIUM INTERNOCIONAL)
 st.markdown("""
     <style>
         /* Importação de Fonte Moderna e Configuração Global */
@@ -50,38 +50,48 @@ st.markdown("""
             margin-bottom: 2.5rem;
         }
         
-        /* Estilização das Labels Nativas do Streamlit (Substitui os Cards HTML com Perfeição) */
-        div[data-testid="stWidgetLabel"] p {
+        /* Títulos Customizados das Etapas (Sem depender do Streamlit) */
+        .custom-step-title {
             color: #0f172a !important;
             font-size: 1.2rem !important;
             font-weight: 700 !important;
             letter-spacing: -0.02em !important;
-            margin-bottom: 4px !important;
+            margin-top: 1.5rem !important;
+            margin-bottom: 2px !important;
         }
-        
-        /* Container de instrução logo abaixo do título do passo */
-        .step-desc-native {
+        .custom-step-desc {
             color: #64748b;
             font-size: 0.9rem;
             line-height: 1.5;
-            margin-top: -6px;
             margin-bottom: 12px;
         }
         
-        /* Modernização das Caixas de Upload nativas do Streamlit */
+        /* Modernização Completa das Caixas de Upload */
         div[data-testid="stFileUploader"] section {
             background-color: #ffffff !important;
             border: 2px dashed #cbd5e1 !important;
             border-radius: 16px !important;
             padding: 1.5rem !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.01) !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01) !important;
             transition: all 0.25s ease !important;
         }
         div[data-testid="stFileUploader"] section:hover {
             border-color: #3b82f6 !important;
             background-color: #f0f7ff !important;
             transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05) !important;
+        }
+        
+        /* EXTINÇÃO TOTAL DAS LABELS NATIVAS (EVITA DUPLICIDADE DE VEZ) */
+        div[data-testid="stFileUploader"] label, 
+        div[data-testid="stTextInput"] label,
+        div[data-testid="stWidgetLabel"],
+        .stWidgetLabel,
+        [data-testid="stWidgetLabel"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0px !important;
+            position: absolute !important;
         }
         
         /* Modernização do Campo de Input de Texto */
@@ -92,14 +102,13 @@ st.markdown("""
             padding: 12px 16px !important;
             font-size: 0.95rem !important;
             color: #334155 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
         }
         div[data-testid="stTextInput"] input:focus {
             border-color: #3b82f6 !important;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
         }
         
-        /* BOTÃO PRINCIPAL ULTRA-PRO (Estilo Dashboard Moderno) */
+        /* BOTÃO PRINCIPAL ULTRA-PRO */
         div.stButton > button:first-child {
             background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%) !important;
             color: white !important;
@@ -110,9 +119,8 @@ st.markdown("""
             border-radius: 12px !important;
             width: 100% !important;
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-            letter-spacing: -0.01em;
-            margin-top: 1rem;
+            transition: all 0.25s ease !important;
+            margin-top: 1.5rem;
         }
         div.stButton > button:first-child:hover {
             background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%) !important;
@@ -126,19 +134,6 @@ st.markdown("""
             padding: 16px 20px !important;
             border-radius: 14px !important;
             border: 1px solid #e2e8f0 !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.01) !important;
-        }
-        div[data-testid="stMetricLabel"] p {
-            color: #64748b !important;
-            font-weight: 600 !important;
-            font-size: 0.85rem !important;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        div[data-testid="stMetricValue"] div {
-            color: #0f172a !important;
-            font-weight: 800 !important;
-            font-size: 1.6rem !important;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -157,14 +152,15 @@ def extrair_codigo_orgao(nome_arquivo):
     return None
 
 # --- PASSO 1: Base de Destinatários ---
-arquivo_emails = st.file_uploader("📂 1. Base de Destinatários", type=["xlsx"])
-st.markdown('<div class="step-desc-native">Selecione o arquivo mestre do Excel (.xlsx) contendo a relação de Órgãos e E-mails correspondentes.</div>', unsafe_allow_html=True)
-
-st.markdown("<br>", unsafe_allow_html=True)
+st.markdown('<div class="custom-step-title">📂 1. Base de Destinatários</div>', unsafe_allow_html=True)
+st.markdown('<div class="custom-step-desc">Selecione o arquivo mestre do Excel (.xlsx) contendo a relação de Órgãos e E-mails correspondentes.</div>', unsafe_allow_html=True)
+# Passando uma chave aleatória e rótulo irrelevante que será pulverizado pelo CSS
+arquivo_emails = st.file_uploader("label_oculta_1", type=["xlsx"], key="upload_1", label_visibility="collapsed")
 
 # --- PASSO 2: Relatórios e Documentos ---
-arquivos_soltos = st.file_uploader("📄 2. Relatórios e Anexos", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True)
-st.markdown('<div class="step-desc-native">Arraste e solte todos os arquivos soltos em lote que o sistema deve processar (.xlsx, .csv, .txt).</div>', unsafe_allow_html=True)
+st.markdown('<div class="custom-step-title">📄 2. Relatórios e Anexos</div>', unsafe_allow_html=True)
+st.markdown('<div class="custom-step-desc">Arraste e solte todos os arquivos soltos em lote que o sistema deve processar (.xlsx, .csv, .txt).</div>', unsafe_allow_html=True)
+arquivos_soltos = st.file_uploader("label_oculta_2", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True, key="upload_2", label_visibility="collapsed")
 
 # --- MÉTRICAS MODERNAS ---
 if arquivos_soltos:
@@ -181,14 +177,10 @@ if arquivos_soltos:
 else:
     st.caption("ℹ️ Aguardando inserção de arquivos do Passo 2 para análise de metadados...")
 
-st.markdown("<br>", unsafe_allow_html=True)
-
 # --- PASSO 3: Diretório do Robô Local ---
-caminho_local_pc = st.text_input(
-    "⚙️ 3. Diretório do Robô Local",
-    placeholder="Ex: C:\\RoboAutomate\\Arquivos"
-)
-st.markdown('<div class="step-desc-native">Insira a pasta exata do Windows onde o Power Automate executará a extração e leitura física dos itens.</div>', unsafe_allow_html=True)
+st.markdown('<div class="custom-step-title">⚙️ 3. Diretório do Robô Local</div>', unsafe_allow_html=True)
+st.markdown('<div class="custom-step-desc">Insira a pasta exata do Windows onde o Power Automate executará a extração e leitura física dos itens.</div>', unsafe_allow_html=True)
+caminho_local_pc = st.text_input("label_oculta_3", placeholder="Ex: C:\\RoboAutomate\\Arquivos", key="input_3", label_visibility="collapsed").strip().strip('"')
 
 st.markdown("<br>", unsafe_allow_html=True)
 
