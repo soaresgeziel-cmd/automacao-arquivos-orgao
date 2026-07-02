@@ -11,7 +11,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# ESTILIZAÇÃO AVANÇADA UI/UX (CSS PREMIUM INTERNOCIONAL)
+# ESTILIZAÇÃO AVANÇADA UI/UX (CSS PREMIUM INTERNACIONAL)
 st.markdown("""
     <style>
         /* Importação de Fonte Moderna e Configuração Global */
@@ -107,9 +107,15 @@ st.markdown("""
             background-color: #f0f7ff !important;
         }
         
-        /* Remove qualquer margem ou label residual invisível que cause fantasmas visuais */
-        div[data-testid="stFileUploader"] label {
+        /* FORÇA O SUMIÇO TOTAL DE QUALQUER LABEL RESIDUAL (FIM DO REFLEXO) */
+        div[data-testid="stFileUploader"] label, 
+        div[data-testid="stTextInput"] label,
+        div[data-testid="stFileUploader"] [data-testid="stWidgetLabel"] {
             display: none !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
         
         /* Modernização do Campo de Input de Texto */
@@ -194,7 +200,8 @@ st.markdown("""
         <div class="step-desc">Selecione o arquivo mestre do Excel (.xlsx) contendo a relação de Órgãos e E-mails correspondentes.</div>
     </div>
 """, unsafe_allow_html=True)
-arquivo_emails = st.file_uploader("", type=["xlsx"], label_visibility="collapsed")
+# Removido o label_visibility="collapsed" para evitar bugs de sobreposição estrutural do Streamlit
+arquivo_emails = st.file_uploader("FiltroEmails", type=["xlsx"])
 
 # --- PASSO 2: Upload dos arquivos/anexos ---
 st.markdown("""
@@ -204,7 +211,7 @@ st.markdown("""
         <div class="step-desc">Arraste e solte todos os arquivos soltos em lote que o sistema deve processar (.xlsx, .csv, .txt).</div>
     </div>
 """, unsafe_allow_html=True)
-arquivos_soltos = st.file_uploader("", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True, label_visibility="collapsed")
+arquivos_soltos = st.file_uploader("FiltroArquivos", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True)
 
 # --- MÉTRICAS MODERNAS (UX PREMIUM) ---
 if arquivos_soltos:
@@ -230,9 +237,8 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 caminho_local_pc = st.text_input(
-    "",
-    placeholder="Ex: C:\\RoboAutomate\\Arquivos",
-    label_visibility="collapsed"
+    "FiltroCaminho",
+    placeholder="Ex: C:\\RoboAutomate\\Arquivos"
 ).strip().strip('"')
 
 st.markdown("<br>", unsafe_allow_html=True)
@@ -304,7 +310,7 @@ if st.button("🚀 Iniciar Processamento e Gerar Carga"):
                     mime="application/zip",
                     use_container_width=True
                 )
-                st.warning("⚠️ **Instrução Técnica:** Extraia os arquivos baixados diretamente dentro da pasta local configurada no Passo 3 para manter a integridade do robô.")
+                st.warning("⚠️ **Instrução Técnico:** Extraia os arquivos baixados diretamente dentro da pasta local configurada no Passo 3 para manter a integridade do robô.")
                 
         except Exception as e:
             st.error(f"Erro crítico no processamento de dados: {e}")
