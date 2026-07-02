@@ -4,41 +4,41 @@ import re
 import zipfile
 import io
 
-# Configuração inicial da página web com visual otimizado
+# 1. Configuração de Infraestrutura da Página
 st.set_page_config(
     page_title="Consolidador de Anexos Pro", 
     page_icon="📦", 
     layout="centered"
 )
 
-# ESTILIZAÇÃO ULTRA-MODERNA (APENAS ESTÉTICA, SEM MEXER NA ESTRUTURA NATIVA)
+# 2. Arquitetura de Design (CSS Clean e Isolado - Sem interferência estrutural)
 st.markdown("""
     <style>
-        /* Importação da Fonte Premium Inter */
+        /* Tipografia de Alta Fidelidade */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
         * {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
         
-        /* Fundo do App Moderno em Degradê Sutil */
+        /* Tema de Fundo Corporativo */
         .stApp {
             background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
         }
         
-        /* Ajuste do bloco central */
+        /* Otimização do Grid Central */
         .block-container {
-            padding-top: 3rem !important;
+            padding-top: 3.5rem !important;
             padding-bottom: 4rem !important;
             max-width: 680px !important;
         }
         
-        /* Cabeçalho Corporativo Elegante */
+        /* Typography System para o Header */
         .header-title {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 2.3rem;
+            font-size: 2.4rem;
             font-weight: 800;
             letter-spacing: -0.04em;
             margin-bottom: 6px;
@@ -47,37 +47,38 @@ st.markdown("""
             color: #64748b;
             font-size: 1rem;
             font-weight: 500;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
         
-        /* Estilização das Labels Tradicionais (Idênticas ao seu original, mas com fonte linda) */
+        /* Estilização das Labels Oficiais do Streamlit (Sem quebras de layout) */
         div[data-testid="stWidgetLabel"] p {
-            color: #1e293b !important;
-            font-size: 1.05rem !important;
-            font-weight: 600 !important;
-            letter-spacing: -0.01em !important;
+            color: #0f172a !important;
+            font-size: 1.1rem !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.02em !important;
+            padding-bottom: 4px !important;
         }
         
-        /* Modernização das Caixas de Upload (Layout Padrão Mantido) */
+        /* Design Moderno para Caixas de Upload */
         div[data-testid="stFileUploader"] section {
             background-color: #ffffff !important;
             border: 2px dashed #cbd5e1 !important;
             border-radius: 12px !important;
-            padding: 1rem !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
-            transition: all 0.2s ease !important;
+            padding: 1.2rem !important;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02) !important;
+            transition: border-color 0.2s ease, background-color 0.2s ease !important;
         }
         div[data-testid="stFileUploader"] section:hover {
             border-color: #3b82f6 !important;
             background-color: #f0f7ff !important;
         }
         
-        /* Modernização do Campo de Input de Texto */
+        /* Design Moderno para Inputs de Texto */
         div[data-testid="stTextInput"] input {
             background-color: #ffffff !important;
             border: 1px solid #cbd5e1 !important;
             border-radius: 10px !important;
-            padding: 10px 14px !important;
+            padding: 12px 16px !important;
             font-size: 0.95rem !important;
             color: #334155 !important;
         }
@@ -86,39 +87,39 @@ st.markdown("""
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
         }
         
-        /* BOTÃO PRINCIPAL ULTRA-PRO MODERNO */
+        /* Botão de Ação Principal Estilo SaaS */
         div.stButton > button:first-child {
             background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%) !important;
             color: white !important;
             border: none !important;
-            padding: 12px 24px !important;
+            padding: 14px 28px !important;
             font-weight: 700 !important;
             font-size: 1.05rem !important;
             border-radius: 10px !important;
             width: 100% !important;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
             transition: all 0.2s ease !important;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
         div.stButton > button:first-child:hover {
             background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%) !important;
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35) !important;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3) !important;
             transform: translateY(-1px) !important;
         }
         
-        /* Customização sutil dos blocos de métricas */
+        /* Dashboard Container de Métricas */
         div[data-testid="stMetric"] {
             background: #ffffff !important;
-            padding: 14px 18px !important;
+            padding: 16px 20px !important;
             border-radius: 12px !important;
             border: 1px solid #e2e8f0 !important;
         }
     </style>
 """, unsafe_allow_html=True)
 
-# Topo do Site (Header Premium)
+# 3. Elementos Identitários da UI
 st.markdown('<div class="header-title">Consolidador de Anexos</div>', unsafe_allow_html=True)
-st.markdown('<div class="header-subtitle">Tratamento e agrupamento inteligente de relatórios para o Power Automate Desktop.</div>', unsafe_allow_html=True)
+st.markdown('<div class="header-subtitle">Tratamento e agrupamento inteligente de relatórios para automações.</div>', unsafe_allow_html=True)
 
 def extrair_codigo_orgao(nome_arquivo):
     padrao = re.search(r'\b\d{4}\b', nome_arquivo)
@@ -129,17 +130,16 @@ def extrair_codigo_orgao(nome_arquivo):
         return padrao_livre.group(0)
     return None
 
-# --- PASSO 1: Base de Destinatários ---
-# Mantido exatamente igual ao seu código original estruturalmente
-arquivo_emails = st.file_uploader("📂 Passo 1: Selecione a Base de Destinatários (.xlsx)", type=["xlsx"])
+# --- COMPONENTE 1: Base de Destinatários ---
+# Nomeclatura unificada no próprio widget. Evita qualquer duplicação estrutural.
+arquivo_emails = st.file_uploader("📂 1. Base de Destinatários (.xlsx)", type=["xlsx"])
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# --- PASSO 2: Relatórios e Documentos ---
-# Mantido exatamente igual ao seu código original estruturalmente
-arquivos_soltos = st.file_uploader("📄 Passo 2: Arraste os Relatórios e Anexos (Em Lote)", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True)
+# --- COMPONENTE 2: Upload de Lote ---
+arquivos_soltos = st.file_uploader("📄 2. Relatórios e Anexos (Múltiplos Arquivos)", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True)
 
-# --- MÉTRICAS MODERNAS ---
+# --- MÓDULO DE TELEMETRIA (MÉTRICAS) ---
 if arquivos_soltos:
     total_arquivos = len(arquivos_soltos)
     tamanho_total_bytes = sum(arq.size for arq in arquivos_soltos)
@@ -152,17 +152,16 @@ if arquivos_soltos:
         st.metric(label="Volume do Lote", value=f"{tamanho_total_mb:.2f} MB")
     st.markdown("<br>", unsafe_allow_html=True)
 else:
-    st.caption("ℹ️ Aguardando inserção de arquivos do Passo 2 para análise de metadados...")
+    st.caption("ℹ️ Aguardando inserção de arquivos para análise...")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# --- PASSO 3: Diretório do Robô Local ---
-# Mantido exatamente igual ao seu código original estruturalmente
-caminho_local_pc = st.text_input("⚙️ Passo 3: Insira o Diretório do Robô Local", placeholder="Ex: C:\\RoboAutomate\\Arquivos").strip().strip('"')
+# --- COMPONENTE 3: Input do Robô ---
+caminho_local_pc = st.text_input("⚙️ 3. Diretório do Robô Local", placeholder="Ex: C:\\RoboAutomate\\Arquivos").strip().strip('"')
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# --- PROCESSAMENTO ---
+# --- PIPELINE DE PROCESSAMENTO ---
 if st.button("🚀 Iniciar Processamento e Gerar Carga"):
     if not arquivo_emails:
         st.error("Por favor, faça o upload do arquivo de e-mails.")
@@ -172,7 +171,7 @@ if st.button("🚀 Iniciar Processamento e Gerar Carga"):
         st.error("Por favor, digite o caminho da pasta local para a planilha final.")
     else:
         try:
-            with st.spinner("Compilando pacotes binários e gerando índices estruturados..."):
+            with st.spinner("Processando pacotes e estruturando matriz de dados..."):
                 df_emails_raw = pd.read_excel(arquivo_emails)
                 col_orgao = df_emails_raw.columns[0]
                 col_email = df_emails_raw.columns[1]
@@ -220,7 +219,7 @@ if st.button("🚀 Iniciar Processamento e Gerar Carga"):
                     
                     zip_mestre.writestr("Resultado_Consolidado.xlsx", excel_buffer.getvalue())
                 
-                st.success("✨ Lote processado e compactado com sucesso!")
+                st.success("✨ Lote processado com sucesso!")
                 
                 st.download_button(
                     label="📥 BAIXAR PACOTE CONSOLIDADO (.ZIP)",
@@ -229,7 +228,7 @@ if st.button("🚀 Iniciar Processamento e Gerar Carga"):
                     mime="application/zip",
                     use_container_width=True
                 )
-                st.warning("⚠️ **Instrução Técnica:** Extraia os arquivos baixados diretamente dentro da pasta local configurada no Passo 3 para manter a integridade do robô.")
+                st.warning("⚠️ **Instrução Técnica:** Extraia os arquivos baixados diretamente dentro da pasta local configurada no Passo 3.")
                 
         except Exception as e:
-            st.error(f"Erro crítico no processamento de dados: {e}")
+            st.error(f"Erro no processamento: {e}")
