@@ -107,6 +107,11 @@ st.markdown("""
             background-color: #f0f7ff !important;
         }
         
+        /* Remove qualquer margem ou label residual invisível que cause fantasmas visuais */
+        div[data-testid="stFileUploader"] label {
+            display: none !important;
+        }
+        
         /* Modernização do Campo de Input de Texto */
         div[data-testid="stTextInput"] input {
             background-color: #f8fafc !important;
@@ -189,7 +194,7 @@ st.markdown("""
         <div class="step-desc">Selecione o arquivo mestre do Excel (.xlsx) contendo a relação de Órgãos e E-mails correspondentes.</div>
     </div>
 """, unsafe_allow_html=True)
-arquivo_emails = st.file_uploader("Upload e-mails", type=["xlsx"], label_visibility="collapsed")
+arquivo_emails = st.file_uploader("", type=["xlsx"], label_visibility="collapsed")
 
 # --- PASSO 2: Upload dos arquivos/anexos ---
 st.markdown("""
@@ -199,7 +204,7 @@ st.markdown("""
         <div class="step-desc">Arraste e solte todos os arquivos soltos em lote que o sistema deve processar (.xlsx, .csv, .txt).</div>
     </div>
 """, unsafe_allow_html=True)
-arquivos_soltos = st.file_uploader("Upload arquivos", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True, label_visibility="collapsed")
+arquivos_soltos = st.file_uploader("", type=["xlsx", "xls", "csv", "txt"], accept_multiple_files=True, label_visibility="collapsed")
 
 # --- MÉTRICAS MODERNAS (UX PREMIUM) ---
 if arquivos_soltos:
@@ -225,7 +230,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 caminho_local_pc = st.text_input(
-    "Caminho local:",
+    "",
     placeholder="Ex: C:\\RoboAutomate\\Arquivos",
     label_visibility="collapsed"
 ).strip().strip('"')
