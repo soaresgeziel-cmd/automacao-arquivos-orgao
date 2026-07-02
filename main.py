@@ -32,6 +32,13 @@ arquivos_soltos = st.file_uploader(
     accept_multiple_files=True
 )
 
+# --- CONTADOR DE ARQUIVOS (NOVIDADE) ---
+if arquivos_soltos:
+    total_arquivos = len(arquivos_soltos)
+    st.info(f"📊 **Total de arquivos carregados com sucesso:** {total_arquivos}")
+else:
+    st.caption("ℹ️ Nenhum arquivo carregado ainda.")
+
 # --- PASSO 3: Input do caminho local ---
 st.subheader("3. Diretório de Destino Local")
 caminho_local_pc = st.text_input(
